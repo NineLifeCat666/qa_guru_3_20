@@ -19,6 +19,7 @@ import java.net.URL;
 import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byClassName;
 import static com.codeborne.selenide.Selenide.*;
 import static io.appium.java_client.MobileBy.AccessibilityId;
@@ -68,7 +69,7 @@ class SearchTests extends TestBase {
     }
 
     @Test
-    @Disabled("Java + Appium")
+    //@Disabled("Java + Appium")
     @DisplayName("Successful search in wikipedia android app")
     void successfulSearchDisabled() throws InterruptedException, MalformedURLException {
         // Move to TestBase
@@ -94,4 +95,15 @@ class SearchTests extends TestBase {
         List<AndroidElement> allProductsName = driver.findElementsByClassName("android.widget.TextView");
         assert(allProductsName.size() > 0);
     }
-}
+        @Test
+        @DisplayName("Sample test on ios platform")
+        @Tag("ios")
+        void searchIOSTest() {
+            open();
+            $(AccessibilityId("Text Button")).click();
+            $(AccessibilityId("Text Input")).setValue("hello@browserstack.com").pressEnter();
+            $(AccessibilityId("Text Output")).shouldHave(text("hello@browserstack.com"));
+        }
+
+    }
+

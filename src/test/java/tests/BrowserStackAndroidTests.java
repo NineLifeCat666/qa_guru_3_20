@@ -4,15 +4,27 @@ import java.net.URL;
 import java.util.List;
 import java.net.MalformedURLException;
 
+import com.codeborne.selenide.CollectionCondition;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-public class BrowserStackAndroidTests {
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Selenide.*;
+import static io.appium.java_client.MobileBy.AccessibilityId;
+import static io.qameta.allure.Allure.step;
+import static org.openqa.selenium.By.className;
+
+public class BrowserStackAndroidTests extends TestBase{
 
     public static void main(String args[]) throws MalformedURLException, InterruptedException {
         DesiredCapabilities caps = new DesiredCapabilities();
@@ -42,7 +54,7 @@ public class BrowserStackAndroidTests {
         // If you have uploaded your app, update the test case here.
         AndroidElement searchElement = (AndroidElement) new WebDriverWait(driver, 30).until(
             ExpectedConditions.elementToBeClickable(
-                MobileBy.AccessibilityId("Search Wikipedia")));
+                AccessibilityId("Search Wikipedia")));
         searchElement.click();
         AndroidElement insertTextElement = (AndroidElement) new WebDriverWait(driver, 30).until(
               ExpectedConditions.elementToBeClickable(
@@ -55,5 +67,15 @@ public class BrowserStackAndroidTests {
 
         // Invoke driver.quit() after the test is done to indicate that the test is completed.
         driver.quit();
+    }
+    @Feature("Android Test")
+    @Tag("android")
+    @Test
+    @DisplayName("Successful search in wikipedia android app ")
+    public void androidTests() {
+        open();
+        $(AccessibilityId("Search Wikipedia")).click();
+        $(MobileBy.id("org.wikipedia.alpha:id/search_src_text")).setValue("BrowserStack");
+        $$(className("android.widget.TextView")).shouldBe(CollectionCondition.sizeGreaterThan(0));
     }
 }

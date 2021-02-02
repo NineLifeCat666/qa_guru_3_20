@@ -1,6 +1,7 @@
 package config;
 
 import org.aeonbits.owner.ConfigFactory;
+import utils.Platform;
 
 public class ConfigHelper {
 
@@ -14,6 +15,13 @@ public class ConfigHelper {
 
     public static String getApp() {
         return getConfig().app();
+    }
+    public static Platform getPlatform() {
+        return getConfig().platform();
+    }
+
+    public static String getBrowserstackURL() {
+        return getConfig().browserstackURL();
     }
 
     private static MobileConfig getConfig() {
